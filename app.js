@@ -1,75 +1,76 @@
-//Setting up the computer's choice
-function getComputerChoice() {
-    const random = ['rock', 'paper', 'scissors'];
-    return random[Math.floor(Math.random() * random.length)];
-}
+const buttons = document.querySelectorAll('button');
+let pScore= 0;
+let cScore = 0;
+
+buttons.forEach((button) => {
+  button.addEventListener('click', function () {
+    const playerSelection = this.textContent;
+
+    const options = ['Rock', 'Paper', 'Scissors']
+    const computerSelection = options[Math.floor(Math.random() * 3)];
+
+    playRound(playerSelection, computerSelection);
+
+  updateScore();
+  if (chechWinner()) {
+    pScore = cScore = 0;
+  updateScore();
+  }
+  });
+});
+
+
+
+
 
 //The conditional statements
 function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
-    if(playerSelection === computerSelection) {
-        return 'Tie!'
-    }
-    else if(playerSelection === 'rock' && computerSelection === 'paper') {
-        return 'Computer Win!'
-    }
-    else if(playerSelection === 'rock' && computerSelection === 'scissors') {
-        return 'Player Win!'
-    }
-    else if(playerSelection === 'paper' && computerSelection === 'rock') {
-        return 'Player Win!'
-    }
-    else if(playerSelection === 'paper' && computerSelection === 'rock') {
-        return 'Player Win!'
-    }
-    else if(playerSelection === 'scissors' && computerSelection === 'rock') {
-        return 'Computer Win!'
-    }
-    else if(playerSelection === 'scissors' && computerSelection === 'paper') {
-        return 'Player Win!'
-    }
-    else {
-        return 'Pick something!'
-    }
-}
+  const picks = `${playerSelection} vs ${computerSelection}`
 
-//Setting up the game
-function game() {
-    let computerWins = 0;
-        let playerWins = 0;
-        let tieWins = 0;
-    
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt();
-        const computerSelection = getComputerChoice();
-        const something = playRound(playerSelection, computerSelection);
-        if(something == 'Computer Win!') {
-            computerWins++
-        }
-        else if(something == 'Player Win!') {
-            playerWins++
-        }
-        else{
-            tieWins++
-        }
 
-        console.log(playRound(playerSelection, computerSelection))
-     }
-     if(computerWins > playerWins) {
-        alert('Computer won the Game!')
-    }
-    else if(playerWins > computerWins) {
-        alert('You won the Game!')
-    }
-    else if(computerWins == playerWins) {
-        alert('Its a Tie!')
-    }
-    else{
-        alert('Dont waste my Time!')
-    }
-        
-    
+  if(playerSelection === computerSelection) {
+      alert(`${picks} = Tie!`);
+  }
+  else if(playerSelection === 'Rock' && computerSelection === 'Paper') {
+      alert(`${picks} = Computer Win!`);
+      cScore++;
+  }
+  else if(playerSelection === 'Rock' && computerSelection === 'Scissors') {
+    alert(`${picks} = You Win!`);
+    pScore++;
+  }
+  else if(playerSelection === 'Paper' && computerSelection === 'Rock') {
+    alert(`${picks} = You Win!`);
+    pScore++;
+  }
+  else if(playerSelection === 'Paper' && computerSelection === 'Scissors') {
+    alert(`${picks} = Computer Win!`);
+    cScore++;
+  }
+  else if(playerSelection === 'Scissors' && computerSelection === 'Rock') {
+    alert(`${picks} = Computer Win!`);
+    cScore++;
+  }
+  else if (playerSelection === 'Scissors' && computerSelection === 'Paper') {
+    alert(`${picks} = You Win!`);
+    pScore++;
+  }
 }
 
 
-game();
+function updateScore () {
+  document.getElementById("p-score").textContent = pScore;
+  document.getElementById("c-score").textContent = cScore;
+}
+
+function chechWinner () {
+  if (pScore === 5 || cScore ===5) {
+    const winner = pScore === 5
+    ? "You win the game! Congratulations!"
+    : "Computer wins the game! Try again next time!"
+    alert(winner);
+    return true;
+  }
+  return false;
+  }
+
