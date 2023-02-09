@@ -1,16 +1,16 @@
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('input');
 let pScore= 0;
 let cScore = 0;
 
 buttons.forEach((button) => {
   button.addEventListener('click', function () {
-    const playerSelection = this.textContent;
+    const playerSelection = this.value;
 
     const options = ['Rock', 'Paper', 'Scissors']
     const computerSelection = options[Math.floor(Math.random() * 3)];
 
-    playRound(playerSelection, computerSelection);
-
+  
+  playRound(playerSelection, computerSelection);
   updateScore();
   if (chechWinner()) {
     pScore = cScore = 0;
@@ -58,6 +58,7 @@ function playRound(playerSelection, computerSelection) {
 }
 
 
+
 function updateScore () {
   document.getElementById("p-score").textContent = pScore;
   document.getElementById("c-score").textContent = cScore;
@@ -73,4 +74,6 @@ function chechWinner () {
   }
   return false;
   }
+
+  
 
